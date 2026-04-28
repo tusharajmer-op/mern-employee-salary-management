@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import Layout from '../../../../layout';
 import { Link, useNavigate } from 'react-router-dom';
 import { Breadcrumb, ButtonOne } from '../../../../components';
-import { FaRegEdit, FaPlus } from 'react-icons/fa';
+import { FaRegEdit, FaPlus, FaFileExcel } from 'react-icons/fa';
 import { BsTrash3 } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { deleteDataPegawai, getDataPegawai, getMe } from '../../../../config/redux/action';
 import { BiSearch } from 'react-icons/bi';
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import * as XLSX from 'xlsx';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -54,6 +55,25 @@ const DataPegawai = () => {
 
     const handleFilterStatus = (event) => {
         setFilterStatus(event.target.value);
+    };
+
+    const handleExportExcel = () => {
+        const exportData = dataPegawai.map((data, index) => ({
+            'No': index + 1,
+            'NIK': data.nik,
+            'Nama Pegawai': data.nama_pegawai,
+            'Username': data.username,
+            'Jenis Kelamin': data.jenis_kelamin,
+            'Jabatan': data.jabatan,
+            'Designation': data.designation,
+            'Tanggal Masuk': data.tanggal_masuk,
+            'Status': data.status,
+            'Hak Akses': data.hak_akses,
+        }));
+        const worksheet = XLSX.utils.json_to_sheet(exportData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Data_Pegawai');
+        XLSX.writeFile(workbook, 'Data_Pegawai.xlsx');
     };
 
     const onDeletePegawai = (id) => {
@@ -147,14 +167,25 @@ const DataPegawai = () => {
     return (
         <Layout>
             <Breadcrumb pageName="Data Pegawai" />
-            <Link to="/data-pegawai/form-data-pegawai/add">
-                <ButtonOne>
-                    <span>Tambah Pegawai</span>
+            <div className="flex flex-col md:flex-row justify-start gap-4">
+                <Link to="/data-pegawai/form-data-pegawai/add">
+                    <ButtonOne>
+                        <span>Tambah Pegawai</span>
+                        <span>
+                            <FaPlus />
+                        </span>
+                    </ButtonOne>
+                </Link>
+                <button
+                    onClick={handleExportExcel}
+                    className="inline-flex items-center justify-center gap-2.5 rounded-md bg-success py-2 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                >
+                    <span>Export Excel</span>
                     <span>
-                        <FaPlus />
+                        <FaFileExcel />
                     </span>
-                </ButtonOne>
-            </Link>
+                </button>
+            </div>
             <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 mt-6">
                 <div className="flex justify-between items-center mt-4 flex-col md:flex-row md:justify-between">
                     <div className="relative flex-1 md:mr-2 mb-4 md:mb-0">

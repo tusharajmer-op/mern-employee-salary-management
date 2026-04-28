@@ -17,6 +17,7 @@ const FormEditDataPegawai = () => {
     const [tanggalMasuk, setTanggalMasuk] = useState('');
     const [status, setStatus] = useState('');
     const [hakAkses, setHakAkses] = useState('');
+    const [designation, setDesignation] = useState('');
     const [msg, setMsg] = useState('');
     const { id } = useParams();
 
@@ -36,6 +37,7 @@ const FormEditDataPegawai = () => {
             formData.append('tanggal_masuk', tanggalMasuk);
             formData.append('status', status);
             formData.append('hak_akses', hakAkses);
+            formData.append('designation', designation);
 
             const response = await axios.patch(`http://localhost:5001/data_pegawai/${id}`, formData, {
                 headers: {
@@ -73,6 +75,7 @@ const FormEditDataPegawai = () => {
                 setTanggalMasuk(data.tanggal_masuk);
                 setStatus(data.status);
                 setHakAkses(data.hak_akses);
+                setDesignation(data.designation);
             } catch (error) {
                 if (error.response) {
                     setMsg(error.response.data.msg);
@@ -259,7 +262,36 @@ const FormEditDataPegawai = () => {
                                     </div>
                                 </div>
 
-                                <div className='flex flex-col md:flex-row w-full gap-3 text-center'>
+                                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row mt-10">
+                                    <div className='w-full'>
+                                        <label className='mb-2.5 block text-black dark:text-white'>
+                                            Designation <span className='text-meta-1'>*</span>
+                                        </label>
+                                        <div className='relative z-20 bg-transparent dark:bg-form-input'>
+                                            <select
+                                                className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary'
+                                                name="designation"
+                                                value={designation}
+                                                onChange={(e) => setDesignation(e.target.value)}
+                                                required
+                                            >
+                                                <option value="" disabled>
+                                                    Pilih Designation
+                                                </option>
+                                                <option value="Mason">Mason</option>
+                                                <option value="Electrician">Electrician</option>
+                                                <option value="Plumber">Plumber</option>
+                                                <option value="Supervisor">Supervisor</option>
+                                                <option value="Helper">Helper</option>
+                                            </select>
+                                            <span className='absolute top-1/2 right-4 z-30 -translate-y-1/2 text-2xl'>
+                                                <MdOutlineKeyboardArrowDown />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='flex flex-col md:flex-row w-full gap-3 text-center mt-10'>
                                     <div>
                                         <ButtonOne  >
                                             <span>Perbarui</span>

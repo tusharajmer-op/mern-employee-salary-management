@@ -23,6 +23,7 @@ const FormAddDataPegawai = () => {
         preview: '',
         status: '',
         hak_akses: '',
+        designation: '',
     });
 
     const {
@@ -39,6 +40,7 @@ const FormAddDataPegawai = () => {
         preview,
         status,
         hak_akses,
+        designation,
     } = formData;
 
     const dispatch = useDispatch();
@@ -81,7 +83,7 @@ const FormAddDataPegawai = () => {
         newFormData.append('tanggal_masuk', tanggalMasuk);
         newFormData.append('status', status);
         newFormData.append('hak_akses', hak_akses);
-
+        newFormData.append('designation', formData.designation);
         dispatch(createDataPegawai(newFormData, navigate))
             .then((response) => {
                 Swal.fire({
@@ -333,6 +335,42 @@ const FormAddDataPegawai = () => {
                                     </div>
 
                                 </div>
+                                <div className="mb-4.5 flex flex-col gap-6 xl:flex-row mt-10">
+                                    <select
+                                        className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary'
+                                        name="designation"
+                                        value={designation}
+                                        onChange={handleChange}
+                                        required
+                                    >
+
+                                        <option value="" disabled>
+                                            Pilih Designation
+                                        </option>
+
+                                        <option value="Mason">
+                                            Mason
+                                        </option>
+
+                                        <option value="Electrician">
+                                            Electrician
+                                        </option>
+
+                                        <option value="Plumber">
+                                            Plumber
+                                        </option>
+
+                                        <option value="Supervisor">
+                                            Supervisor
+                                        </option>
+
+                                        <option value="Helper">
+                                            Helper
+                                        </option>
+
+                                    </select>
+
+                                </div>
                                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                     <div className="w-full xl:w-1/2">
                                         <label className="mb-2.5 block text-black dark:text-white ">
@@ -346,6 +384,7 @@ const FormAddDataPegawai = () => {
                                             required={true}
                                         />
                                     </div>
+
                                     <div className="flex justify-center items-center">
                                         {preview ? (
                                             <figure className="relative w-64 h-64 sm:w-40 sm:h-40 md:w-56 md:h-56 lg:w-64 lg:h-64 animate-fadeIn">
