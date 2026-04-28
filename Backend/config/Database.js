@@ -1,8 +1,5 @@
 import { Sequelize } from 'sequelize';
 
-const db = new Sequelize('db_penggajian3', 'root', '', {
-    host: "localhost",
-    dialect: "mysql"
-});
+const db = new Sequelize(process.env.DATABASE_URL,{dialect:'mysql'});
 
 export default db;

@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import 'dotenv/config';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import db from './config/Database.js';
@@ -14,7 +15,8 @@ const app = express();
 
 const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({
-    db: db
+    db: db,
+    tableName: 'sessions'
 });
 
 /* (async() => {
