@@ -126,6 +126,7 @@ const FormAddDataJabatan = () => {
                                         </label>
                                         <input
                                             type='number'
+                                            min='0'
                                             id='gajiPokok'
                                             name='gajiPokok'
                                             value={gajiPokok}
@@ -144,6 +145,7 @@ const FormAddDataJabatan = () => {
                                         </label>
                                         <input
                                             type='number'
+                                            min='0'
                                             id='tjTransport'
                                             name='tjTransport'
                                             value={tjTransport}
@@ -161,6 +163,7 @@ const FormAddDataJabatan = () => {
                                         <input
                                             type='number'
                                             id='uangMakan'
+                                            min='0'
                                             name='uangMakan'
                                             value={uangMakan}
                                             onChange={handleChange}

@@ -119,6 +119,7 @@ const FormEditDataJabatan = () => {
                                         <input
                                             type='number'
                                             id='gajiPokok'
+                                            min='0'
                                             name='gajiPokok'
                                             value={gajiPokok}
                                             onChange={(e) => setGajiPokok(e.target.value)}
@@ -137,6 +138,7 @@ const FormEditDataJabatan = () => {
                                         <input
                                             type='number'
                                             id='tjTransport'
+                                            min='0'
                                             name='tjTransport'
                                             value={tjTransport}
                                             onChange={(e) => setTjTransport(e.target.value)}
@@ -153,6 +155,7 @@ const FormEditDataJabatan = () => {
                                         <input
                                             type='number'
                                             id='uangMakan'
+                                            min='0'
                                             name='uangMakan'
                                             value={uangMakan}
                                             onChange={(e) => setUangMakan(e.target.value)}
