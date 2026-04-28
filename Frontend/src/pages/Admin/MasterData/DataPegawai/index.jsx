@@ -167,7 +167,7 @@ const DataPegawai = () => {
     return (
         <Layout>
             <Breadcrumb pageName="Data Pegawai" />
-            <div className="flex flex-col md:flex-row justify-start gap-4">
+            <div className="flex flex-col sm:flex-row justify-start gap-3">
                 <Link to="/data-pegawai/form-data-pegawai/add">
                     <ButtonOne>
                         <span>Tambah Pegawai</span>
@@ -219,9 +219,9 @@ const DataPegawai = () => {
                 </div>
 
                 <div className="max-w-full overflow-x-auto py-4">
-                    <table className="w-full table-auto">
+                    <table className="w-full table-auto min-w-[1000px]">
                         <thead>
-                            <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                            <tr className="bg-gray-2 text-left dark:bg-meta-4 whitespace-nowrap">
                                 <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">No</th>
                                 <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">Photo</th>
                                 <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">NIK</th>
@@ -236,7 +236,7 @@ const DataPegawai = () => {
                         <tbody>
                             {filteredDataPegawai.slice(startIndex, endIndex).map((data, index) => {
                                 return (
-                                    <tr key={data.id}>
+                                    <tr key={data.id} className="text-xs md:text-sm whitespace-nowrap">
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                             <p className="text-black dark:text-white text-center">{startIndex + index + 1}</p>
                                         </td>
