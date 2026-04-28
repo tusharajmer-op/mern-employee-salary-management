@@ -4,6 +4,7 @@ import LogoSipeka from "../../../../assets/images/logo/logo-sipeka.png";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {formatIndianDate} from "../../../../shared/utils";
 import {
     fetchSlipGajiByMonth,
     fetchSlipGajiByName,
@@ -231,7 +232,7 @@ const PrintPdfSlipGaji = () => {
                                     <span>{name}</span>
                                 </div>
                                 <div className="font-medium text-black dark:text-white">
-                                    <span className="text-right">Karawang, {`${new Date().getDate()} ${bulan} ${tahun}`}</span>
+                                    <span className="text-right">Karawang, {formatIndianDate()}</span>
                                     <br />
                                     <span>Finance</span>
                                     <br />
@@ -240,7 +241,7 @@ const PrintPdfSlipGaji = () => {
                                 </div>
                             </div>
                             <div className="italic text-black dark:text-white mt-30">
-                                Dicetak Pada : {`${new Date().getDate()} ${bulan} ${tahun}`}
+                                Dicetak Pada : {formatIndianDate()}
                             </div>
                         </div>
                     );

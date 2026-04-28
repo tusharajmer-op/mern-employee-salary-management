@@ -464,9 +464,9 @@ export const getDataGajiPegawai = async () => {
         gaji_pokok: pegawai.gaji_pokok.toLocaleString(),
         tj_transport: pegawai.tj_transport.toLocaleString(),
         uang_makan: pegawai.uang_makan.toLocaleString(),
-        hadir: kehadiran.hadir,
-        sakit: kehadiran.sakit,
-        alpha: kehadiran.alpha,
+        hadir: kehadiran?.hadir || 0,
+        sakit: kehadiran?.sakit || 0,
+        alpha: kehadiran?.alpha || 0,
         potongan: potongan ? potongan.total_potongan.toLocaleString() : 0,
         total: total_gaji,
       };
