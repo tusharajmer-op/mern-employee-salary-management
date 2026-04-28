@@ -19,7 +19,8 @@ import {
   DetailDataGaji,
   PrintPdfSlipGaji,
   PrintPdfLaporanAbsensi,
-  PrintPdfDataGajiPegawai
+  PrintPdfDataGajiPegawai,
+  FormAddDataOvertime
 } from '../../components';
 import {
   DataPegawai,
@@ -32,7 +33,8 @@ import {
   UbahPasswordAdmin,
   DataGajiPegawai,
   UbahPasswordPegawai,
-  DataPotongan
+  DataPotongan,
+  DataOvertime
 } from '../../pages'
 
 const AppRoutes = () => {
@@ -107,6 +109,20 @@ const AppRoutes = () => {
         path='/data-gaji/cetak-gaji/slip-gaji/name/:name'
         element={<PrintPdfSlipGaji />}
       />
+      <Route
+      path='/data-overtime'
+      element={<DataOvertime />}
+      />
+
+      <Route
+      path='/data-overtime/form-data-overtime/add'
+      element={<FormAddDataOvertime />}
+      />
+
+      {/* <Route
+      path='/data-overtime/form-data-overtime/edit/:id'
+      element={<FormEditDataOvertime />}
+      /> */}
 
       {/* Laporan Admin */}
       <Route

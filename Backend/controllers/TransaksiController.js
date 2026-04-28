@@ -2,6 +2,7 @@ import DataKehadiran from "../models/DataKehadiranModel.js";
 import DataPegawai from "../models/DataPegawaiModel.js";
 import DataJabatan from "../models/DataJabatanModel.js";
 import PotonganGaji from "../models/PotonganGajiModel.js";
+import DataOvertime from "../models/DataOvertimeModel.js";
 import moment from "moment";
 import "moment/locale/id.js";
 
@@ -691,4 +692,105 @@ export const dataLaporanGajiByYear = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
+};
+
+// method to view all overtimes
+export const viewDataOvertime = async (req, res) => {
+    try {
+        const response = await DataOvertime.findAll({
+            attributes: ['id', 'employee_id', 'nama_pegawai', 'overtime_date', 'hours', 'reason', 'status', 'createdAt']
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
+// method to create overtime
+export const createDataOvertime = async (req, res) => {
+    const { employee_id, nama_pegawai, overtime_date, hours, reason } = req.body;
+
+    // validation
+    if (!employee_id || !nama_pegawai || !overtime_date || !hours || !reason) {
+        return res.status(400).json({ msg: "All fields are required" });
+    }
+
+    const hrs = parseInt(hours, 10);
+    if (isNaN(hrs) || hrs < 1 || hrs > 6) {
+        return res.status(400).json({ msg: "Hours must be between 1 and 6" });
+    }
+
+    const selectedDate = moment(overtime_date);
+    const today = moment().startOf('day');
+    const diffDays = today.diff(selectedDate, 'days');
+
+    if (diffDays < 0) {
+        return res.status(400).json({ msg: "Date cannot be future" });
+    }
+
+    if (diffDays > 7) {
+        return res.status(400).json({ msg: "Date cannot be older than 7 days" });
+    }
+
+    if (reason.trim().length < 10) {
+        return res.status(400).json({ msg: "Reason must be at least 10 characters" });
+    }
+
+    try {
+        await DataOvertime.create({
+            employee_id: employee_id,
+            nama_pegawai: nama_pegawai,
+            overtime_date: overtime_date,
+            hours: hrs,
+            reason: reason,
+            status: "pending"
+        });
+        res.status(201).json({ msg: "Data entered successfully" });
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+};
+
+// method to delete overtime
+export const deleteDataOvertime = async (req, res) => {
+    const data_overtime = await DataOvertime.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    if (!data_overtime) return res.status(404).json({ msg: "Data not found" });
+
+    try {
+        await DataOvertime.destroy({
+            where: {
+                id: data_overtime.id
+            }
+        });
+        res.status(200).json({ msg: "Overtime entry deleted successfully" });
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
+};
+
+export const approveDataOvertime = async (req, res) => {
+    const data_overtime = await DataOvertime.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    if (!data_overtime) return res.status(404).json({ msg: "Data not found" });
+
+    try {
+        await DataOvertime.update({
+            status: "approved"
+        }, {
+            where: {
+                id: data_overtime.id
+            }
+        });
+        res.status(200).json({ msg: "Overtime entry approved successfully" });
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
 };

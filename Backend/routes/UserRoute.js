@@ -42,7 +42,11 @@ import {
 import {
     viewDataGajiPegawai,
     viewDataGajiPegawaiByMonth,
-    viewDataGajiPegawaiByYear
+    viewDataGajiPegawaiByYear,
+    viewDataOvertime,
+    createDataOvertime,
+    deleteDataOvertime,
+    approveDataOvertime
 } from "../controllers/TransaksiController.js";
 
 import {
@@ -103,6 +107,11 @@ router.get('/data_gaji_pegawai', viewDataGajiPegawai);
 router.get('/data_gaji/name/:name', verifyUser, viewDataGajiByName);
 router.get('/data_gaji_pegawai/month/:month', viewDataGajiPegawaiByMonth);
 router.get('/data_gaji_pegawai/year/:year', viewDataGajiPegawaiByYear);
+// Data Overtime
+router.get('/data_overtime', verifyUser, adminOnly, viewDataOvertime);
+router.post('/data_overtime', verifyUser, adminOnly, createDataOvertime);
+router.delete('/data_overtime/:id', verifyUser, adminOnly, deleteDataOvertime);
+router.patch('/data_overtime/approve/:id', verifyUser, adminOnly, approveDataOvertime);
 
 /* ====  Laporan  ==== */
 // laporan Gaji Pegawai
